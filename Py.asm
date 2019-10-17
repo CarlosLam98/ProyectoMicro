@@ -6,6 +6,7 @@
     col DB 0FEh dup (?)
     var1 DB 'a'
     msgEr DB 'No se permite retroceder$'
+    msgEd DB 'Fin del juego$'
     lenght DB 3
     x DB 5
     y DB 5
@@ -32,6 +33,12 @@ Programa:
 LimpiaPantalla:
     MOV AX, 03H
     INT 10H
+    MOV AH, 06h
+    MOV AL, 00h
+    MOV BH, 12h
+    MOV CX, 00h
+    MOV DX, 244fH
+    INT 10h
     
     CMP crece, 1                        ;Nuestro bool de que la serpiente paso por la fruta
     JNE PantallaIncio
@@ -183,6 +190,12 @@ Fin1:
 EtError:                                ;Mensaje de error
     MOV AX, 03H
     INT 10H
+    MOV AH, 06h
+    MOV AL, 00h
+    MOV BH, 80h
+    MOV CX, 00h
+    MOV DX, 244fH
+    INT 10h
     MOV DX, OFFSET msgEr
     MOV AH, 09H
     INT 21H
@@ -239,7 +252,21 @@ Crecer:
 
     ;-----------------FIN DEL PROGRAMA-------------------------
 Fin:
-    MOV ax, 03H
+    MOV AX, 03H
+    INT 10H
+    MOV AH, 06h
+    MOV AL, 00h
+    MOV BH, 80h
+    MOV CX, 00h
+    MOV DX, 244fH
+    INT 10h
+    MOV DX, OFFSET msgEd
+    MOV AH, 09H
+    INT 21H
+    MOV AH, 07H
+    INT 21H
+
+    MOV AX, 03H
     INT 10H
     MOV AH,4ch
     INT 21H
